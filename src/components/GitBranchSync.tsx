@@ -51,8 +51,11 @@ export function GitBranchSync({ filePath, branch }: GitBranchSyncProps) {
         setStatus("error");
         setMessage(data.error ?? "Unknown error");
       } else {
+        const reloadNote = data.reloaded?.length
+          ? ` · reloaded :${data.reloaded.join(", :")}`
+          : "";
         setStatus("success");
-        setMessage(data.output || `On branch ${branch}`);
+        setMessage((data.output || `On branch ${branch}`) + reloadNote);
       }
     } catch (e) {
       setStatus("error");
