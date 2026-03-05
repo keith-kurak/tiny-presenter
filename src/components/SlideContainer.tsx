@@ -7,7 +7,11 @@ interface SlideContainerProps {
   backRoute?: string;
 }
 
-export function SlideContainer({ children, nextRoute, backRoute }: SlideContainerProps) {
+export function SlideContainer({
+  children,
+  nextRoute,
+  backRoute,
+}: SlideContainerProps) {
   const router = useRouter();
 
   return (
@@ -16,7 +20,10 @@ export function SlideContainer({ children, nextRoute, backRoute }: SlideContaine
       <View style={styles.nav}>
         {backRoute ? (
           <Pressable
-            style={({ pressed }) => [styles.navBtn, pressed && styles.navBtnPressed]}
+            style={({ pressed }) => [
+              styles.navBtn,
+              pressed && styles.navBtnPressed,
+            ]}
             onPress={() => router.push(backRoute as any)}
           >
             <Text style={styles.navBtnText}>← Back</Text>
@@ -26,10 +33,16 @@ export function SlideContainer({ children, nextRoute, backRoute }: SlideContaine
         )}
         {nextRoute ? (
           <Pressable
-            style={({ pressed }) => [styles.navBtn, styles.navBtnNext, pressed && styles.navBtnPressed]}
+            style={({ pressed }) => [
+              styles.navBtn,
+              styles.navBtnNext,
+              pressed && styles.navBtnPressed,
+            ]}
             onPress={() => router.push(nextRoute as any)}
           >
-            <Text style={[styles.navBtnText, styles.navBtnNextText]}>Next →</Text>
+            <Text style={[styles.navBtnText, styles.navBtnNextText]}>
+              Next →
+            </Text>
           </Pressable>
         ) : (
           <View style={styles.navPlaceholder} />
@@ -47,6 +60,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 24,
+    justifyContent: "center",
+    gap: 16,
   },
   nav: {
     flexDirection: "row",

@@ -1,6 +1,12 @@
 import Constants from "expo-constants";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 interface GitBranchSyncProps {
   filePath: string;
@@ -64,7 +70,10 @@ export function GitBranchSync({ filePath, branch }: GitBranchSyncProps) {
   return (
     <View style={styles.container}>
       <Pressable
-        style={({ pressed }) => [...buttonStyle, pressed && styles.buttonPressed]}
+        style={({ pressed }) => [
+          ...buttonStyle,
+          pressed && styles.buttonPressed,
+        ]}
         onPress={handleSync}
         disabled={status === "loading"}
       >
@@ -75,17 +84,14 @@ export function GitBranchSync({ filePath, branch }: GitBranchSyncProps) {
             {status === "success"
               ? "✓ Switched"
               : status === "error"
-              ? "✗ Failed"
-              : `git checkout ${branch}`}
+                ? "✗ Failed"
+                : `git checkout ${branch}`}
           </Text>
         )}
       </Pressable>
       {message ? (
         <Text
-          style={[
-            styles.message,
-            status === "error" && styles.messageError,
-          ]}
+          style={[styles.message, status === "error" && styles.messageError]}
           numberOfLines={2}
         >
           {message}
@@ -97,7 +103,13 @@ export function GitBranchSync({ filePath, branch }: GitBranchSyncProps) {
 
 const styles = StyleSheet.create({
   container: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
     gap: 6,
+    paddingHorizontal: 16,
+    paddingBottom: 8,
   },
   button: {
     flexDirection: "row",
@@ -139,5 +151,4 @@ const styles = StyleSheet.create({
   messageError: {
     color: "#f87171",
   },
-
 });

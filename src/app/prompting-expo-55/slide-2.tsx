@@ -1,5 +1,7 @@
-import { BulletsSlide } from "@/components/BulletsSlide";
+import { CodeSnippet } from "@/components/CodeSnippet";
 import { SlideContainer } from "@/components/SlideContainer";
+import { SlideLink } from "@/components/SlideLink";
+import { TitleSlide } from "@/components/TitleSlide";
 
 export default function Slide2() {
   return (
@@ -7,15 +9,13 @@ export default function Slide2() {
       backRoute="/prompting-expo-55"
       nextRoute="/prompting-expo-55/slide-3"
     >
-      <BulletsSlide
-        header="What's New in SDK 55"
-        bullets={[
-          "React Native 0.83 with new architecture on by default",
-          "Expo Router 55 with improved typed routes",
-          "expo-image 55 with faster loading and new props",
-          "expo-symbols with SF Symbols support",
-          "New expo-glass-effect component",
-        ]}
+      <TitleSlide title="1. Upgrade to SDK 55" />
+      <CodeSnippet
+        code={`/plugin marketplace add expo/skills\n\n/plugin install upgrading-expo`}
+      />
+      <SlideLink
+        url="https://github.com/expo/skills/blob/main/plugins/upgrading-expo/skills/upgrading-expo/SKILL.md"
+        title="View the plugin's SKILL file"
       />
     </SlideContainer>
   );

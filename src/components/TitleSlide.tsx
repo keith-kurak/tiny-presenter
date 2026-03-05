@@ -10,25 +10,24 @@ interface TitleSlideProps {
 export function TitleSlide({ title, subtitle, image }: TitleSlideProps) {
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
       {image && (
         <Image source={image} style={styles.image} contentFit="contain" />
       )}
-      <Text style={styles.title}>{title}</Text>
-      {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     gap: 16,
   },
   image: {
     width: "80%",
-    height: 120,
+    height: 160,
     marginBottom: 8,
   },
   title: {
