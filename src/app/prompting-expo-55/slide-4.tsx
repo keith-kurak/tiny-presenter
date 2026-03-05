@@ -1,5 +1,6 @@
-import { BulletsSlide } from "@/components/BulletsSlide";
+import { GitBranchSync } from "@/components/GitBranchSync";
 import { SlideContainer } from "@/components/SlideContainer";
+import { TitleSlide } from "@/components/TitleSlide";
 
 export default function Slide4() {
   return (
@@ -7,14 +8,13 @@ export default function Slide4() {
       backRoute="/prompting-expo-55/slide-3"
       nextRoute="/prompting-expo-55/slide-5"
     >
-      <BulletsSlide
-        header="Prompting for New APIs"
-        bullets={[
-          "Give context: platform, SDK version, file structure",
-          'Ask for typed, idiomatic Expo Router code',
-          "Request examples using real SDK 55 component names",
-          "Follow up: \"What props changed from SDK 52?\"",
-        ]}
+      <TitleSlide
+        title="3. Reimplement a screen or two in Expo UI"
+        image={require("@/assets/prompting-expo-55/expo-ui-prompt.png")}
+      />
+      <GitBranchSync
+        branch="02.1-expo-ui"
+        filePath="/Users/keith/Github/demos/health-logger-sdk55"
       />
     </SlideContainer>
   );

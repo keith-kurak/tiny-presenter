@@ -14,7 +14,12 @@ export default function Slide3() {
         image={require("@/assets/prompting-expo-55/native-tabs.png")}
       />
       <BulletsSlide
-        bullets={["Hide tabs", "Better keyboard handling", "Listeners"]}
+        bullets={[
+          "Hide tabs",
+          "Better keyboard handling",
+          "Better safe area handling",
+          "Listeners",
+        ]}
       />
       <GitBranchSync
         branch="01-native-tabs"
