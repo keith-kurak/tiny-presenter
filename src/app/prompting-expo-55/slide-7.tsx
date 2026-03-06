@@ -1,4 +1,5 @@
 import { SlideContainer } from "@/components/SlideContainer";
+import { SlideLink } from "@/components/SlideLink";
 import { TitleSlide } from "@/components/TitleSlide";
 
 export default function Slide7() {
@@ -10,6 +11,10 @@ export default function Slide7() {
       <TitleSlide
         title="Don't be afraid to just ask..."
         subtitle="'uhh, what if you used ListItems inside of a LazyView?'"
+      />
+      <SlideLink
+        url="https://github.com/expo/skills/pull/29"
+        title="Jetpack Compose skills improvements"
       />
     </SlideContainer>
   );

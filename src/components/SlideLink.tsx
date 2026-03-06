@@ -16,7 +16,9 @@ export function SlideLink({ url, title }: SlideLinkProps) {
       }
     >
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.url} numberOfLines={1}>{url}</Text>
+      <Text style={styles.url} numberOfLines={1}>
+        {url}
+      </Text>
     </Pressable>
   );
 }
@@ -26,6 +28,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 2,
     borderLeftColor: "#3b4fd8",
     paddingLeft: 12,
+    alignItems: "center",
     gap: 2,
   },
   pressed: {

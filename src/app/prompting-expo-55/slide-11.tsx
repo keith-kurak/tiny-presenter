@@ -19,11 +19,11 @@ export default function Slide11() {
         ]}
       />
       <SlideImage
-        source={require("@/assets/prompting-expo-55/ios-toolbar.png")}
+        source={require("@/assets/prompting-expo-55/material-dynamic-colors.png")}
         height={400}
       />
       <GitBranchSync
-        branch="06-platform-colors"
+        branch="06-material-dynamic-colors"
         filePath="/Users/keith/Github/demos/health-logger-sdk55"
       />
     </SlideContainer>

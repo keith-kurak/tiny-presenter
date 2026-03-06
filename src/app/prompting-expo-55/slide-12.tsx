@@ -12,7 +12,7 @@ export default function Slide12() {
     >
       <TitleSlide title="8. Display these two screens as a SplitView on iPad" />
       <SlideImage
-        source={require("@/assets/prompting-expo-55/ios-toolbar.png")}
+        source={require("@/assets/prompting-expo-55/ios-split-view.png")}
         height={400}
       />
       <GitBranchSync

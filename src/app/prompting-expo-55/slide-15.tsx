@@ -11,6 +11,11 @@ export default function Slide15() {
         source={require("@/assets/prompting-expo-55/agent-waitlist.png")}
         height={400}
       />
+      <TitleSlide title="" />
+      <TitleSlide
+        title="bit.ly/prompt-expo-toronto"
+        subtitle="⬆️ tonight's demo"
+      />
     </SlideContainer>
   );
 }

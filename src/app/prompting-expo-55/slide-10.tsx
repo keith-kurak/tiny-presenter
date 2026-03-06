@@ -1,3 +1,4 @@
+import { BulletsSlide } from "@/components/BulletsSlide";
 import { GitBranchSync } from "@/components/GitBranchSync";
 import { SlideContainer } from "@/components/SlideContainer";
 import SlideImage from "@/components/SlideImage";
@@ -10,12 +11,13 @@ export default function Slide10() {
       nextRoute="/prompting-expo-55/slide-11"
     >
       <TitleSlide title="6. Turn this screen into a form sheet" />
+      <BulletsSlide bullets={["New footer API", "Liquid glass-ready"]} />
       <SlideImage
-        source={require("@/assets/prompting-expo-55/ios-toolbar.png")}
-        height={400}
+        source={require("@/assets/prompting-expo-55/form-sheet.png")}
+        height={350}
       />
       <GitBranchSync
-        branch="04-native-ui-toolbar"
+        branch="05-form-sheet"
         filePath="/Users/keith/Github/demos/health-logger-sdk55"
       />
     </SlideContainer>
