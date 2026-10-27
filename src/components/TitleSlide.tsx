@@ -1,19 +1,43 @@
-import { Image } from "expo-image";
-import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
+import { Image, ImageProps } from "expo-image";
+import { StyleSheet, Text, View } from "react-native";
+
+import { useSlideScale } from "@/hooks/useSlideScale";
 
 interface TitleSlideProps {
   title: string;
   subtitle?: string;
-  image?: ImageSourcePropType;
+  image?: ImageProps["source"];
 }
 
 export function TitleSlide({ title, subtitle, image }: TitleSlideProps) {
+  const scale = useSlideScale();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+    <View style={[styles.container, { gap: 16 * scale.text }]}>
+      <Text
+        style={[
+          styles.title,
+          { fontSize: 32 * scale.text, lineHeight: 40 * scale.text },
+        ]}
+      >
+        {title}
+      </Text>
+      {subtitle && (
+        <Text
+          style={[
+            styles.subtitle,
+            { fontSize: 16 * scale.text, lineHeight: 24 * scale.text },
+          ]}
+        >
+          {subtitle}
+        </Text>
+      )}
       {image && (
-        <Image source={image} style={styles.image} contentFit="contain" />
+        <Image
+          source={image}
+          style={[styles.image, { height: 160 * scale.media }]}
+          contentFit="contain"
+        />
       )}
     </View>
   );
@@ -21,28 +45,25 @@ export function TitleSlide({ title, subtitle, image }: TitleSlideProps) {
 
 const styles = StyleSheet.create({
   container: {
+    flexShrink: 1,
+    minHeight: 0,
     justifyContent: "center",
     alignItems: "center",
-    gap: 16,
   },
   image: {
     width: "80%",
-    height: 160,
+    flexShrink: 1,
     marginBottom: 8,
   },
   title: {
-    fontSize: 32,
     fontWeight: "800",
     color: "#ffffff",
     textAlign: "center",
-    lineHeight: 40,
     letterSpacing: -0.5,
   },
   subtitle: {
-    fontSize: 16,
     color: "#9ca3af",
     textAlign: "center",
-    lineHeight: 24,
     marginTop: 4,
   },
 });

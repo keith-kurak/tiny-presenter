@@ -1,13 +1,7 @@
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-const PRESENTATIONS = [
-  {
-    title: "Prompting Your Way Through Expo SDK 55",
-    route: "/prompting-expo-55",
-    slideCount: 5,
-  },
-];
+import { PRESENTATIONS } from "@/presentations";
 
 export default function Home() {
   const router = useRouter();
@@ -16,14 +10,19 @@ export default function Home() {
     <View style={styles.container}>
       <Text style={styles.heading}>tiny presenter</Text>
       <View style={styles.list}>
-        {PRESENTATIONS.map((p) => (
+        {Object.entries(PRESENTATIONS).map(([slug, p]) => (
           <Pressable
-            key={p.route}
+            key={slug}
             style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
-            onPress={() => router.push(p.route as any)}
+            onPress={() =>
+              router.push({
+                pathname: "/[presentation]/[slide]",
+                params: { presentation: slug, slide: "1" },
+              })
+            }
           >
             <Text style={styles.cardTitle}>{p.title}</Text>
-            <Text style={styles.cardMeta}>{p.slideCount} slides</Text>
+            <Text style={styles.cardMeta}>{p.slides.length} slides</Text>
           </Pressable>
         ))}
       </View>

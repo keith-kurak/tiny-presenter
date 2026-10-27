@@ -1,11 +1,15 @@
 import { Linking, Platform, Pressable, StyleSheet, Text } from "react-native";
 
+import { useSlideScale } from "@/hooks/useSlideScale";
+
 interface SlideLinkProps {
   url: string;
   title: string;
 }
 
 export function SlideLink({ url, title }: SlideLinkProps) {
+  const scale = useSlideScale();
+
   return (
     <Pressable
       style={({ pressed }) => [styles.container, pressed && styles.pressed]}
@@ -15,8 +19,10 @@ export function SlideLink({ url, title }: SlideLinkProps) {
           : Linking.openURL(url)
       }
     >
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.url} numberOfLines={1}>
+      <Text style={[styles.title, { fontSize: 14 * scale.text }]}>
+        {title}
+      </Text>
+      <Text style={[styles.url, { fontSize: 11 * scale.text }]} numberOfLines={1}>
         {url}
       </Text>
     </Pressable>
@@ -25,22 +31,22 @@ export function SlideLink({ url, title }: SlideLinkProps) {
 
 const styles = StyleSheet.create({
   container: {
+    alignSelf: "center",
+    maxWidth: "100%",
     borderLeftWidth: 2,
     borderLeftColor: "#3b4fd8",
     paddingLeft: 12,
-    alignItems: "center",
+    alignItems: "flex-start",
     gap: 2,
   },
   pressed: {
     opacity: 0.6,
   },
   title: {
-    fontSize: 14,
     fontWeight: "600",
     color: "#93a3fb",
   },
   url: {
-    fontSize: 11,
     color: "#6b7280",
     fontFamily: "monospace",
   },

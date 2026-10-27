@@ -1,44 +1,57 @@
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { useSlideScale } from "@/hooks/useSlideScale";
+
 interface SlideContainerProps {
   children: React.ReactNode;
-  nextRoute?: string;
-  backRoute?: string;
+  presentation: string;
+  nextSlide?: number;
+  backSlide?: number;
 }
 
 export function SlideContainer({
   children,
-  nextRoute,
-  backRoute,
+  presentation,
+  nextSlide,
+  backSlide,
 }: SlideContainerProps) {
   const router = useRouter();
+  const scale = useSlideScale();
+
+  const goTo = (slide: number) =>
+    router.push({
+      pathname: "/[presentation]/[slide]",
+      params: { presentation, slide: String(slide) },
+    });
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>{children}</View>
+      <View style={[styles.content, { gap: 16 * scale.text }]}>
+        {children}
+      </View>
       <View style={styles.nav}>
-        {backRoute ? (
+        {backSlide ? (
           <Pressable
             style={({ pressed }) => [
               styles.navBtn,
               pressed && styles.navBtnPressed,
             ]}
-            onPress={() => router.push(backRoute as any)}
+            onPress={() => goTo(backSlide)}
           >
             <Text style={styles.navBtnText}>← Back</Text>
           </Pressable>
         ) : (
           <View style={styles.navPlaceholder} />
         )}
-        {nextRoute ? (
+        {nextSlide ? (
           <Pressable
             style={({ pressed }) => [
               styles.navBtn,
               styles.navBtnNext,
               pressed && styles.navBtnPressed,
             ]}
-            onPress={() => router.push(nextRoute as any)}
+            onPress={() => goTo(nextSlide)}
           >
             <Text style={[styles.navBtnText, styles.navBtnNextText]}>
               Next →
@@ -59,9 +72,11 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    width: "100%",
+    maxWidth: 1200,
+    alignSelf: "center",
     padding: 24,
     justifyContent: "center",
-    gap: 16,
   },
   nav: {
     flexDirection: "row",

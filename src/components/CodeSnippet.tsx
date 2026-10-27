@@ -1,5 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
+import { useSlideScale } from "@/hooks/useSlideScale";
+
 interface CodeSnippetProps {
   code: string;
   language?: string;
@@ -7,6 +9,8 @@ interface CodeSnippetProps {
 }
 
 export function CodeSnippet({ code, language, filename }: CodeSnippetProps) {
+  const scale = useSlideScale();
+
   return (
     <View style={styles.container}>
       {(language || filename) && (
@@ -15,8 +19,18 @@ export function CodeSnippet({ code, language, filename }: CodeSnippetProps) {
           {language && <Text style={styles.language}>{language}</Text>}
         </View>
       )}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scroll}>
-        <Text style={styles.code} selectable>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{ padding: 14 * scale.text }}
+      >
+        <Text
+          style={[
+            styles.code,
+            { fontSize: 12 * scale.text, lineHeight: 20 * scale.text },
+          ]}
+          selectable
+        >
           {code.trim()}
         </Text>
       </ScrollView>
@@ -53,12 +67,7 @@ const styles = StyleSheet.create({
     fontFamily: "monospace",
     marginLeft: "auto",
   },
-  scroll: {
-    padding: 14,
-  },
   code: {
-    fontSize: 12,
-    lineHeight: 20,
     color: "#e2e8f0",
     fontFamily: "monospace",
   },

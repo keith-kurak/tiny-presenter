@@ -1,5 +1,7 @@
 import { useVideoPlayer, VideoView } from "expo-video";
 
+import { useSlideScale } from "@/hooks/useSlideScale";
+
 type Props = {
   source: string;
   height?: number;
@@ -13,6 +15,7 @@ export default function SlideVideo({
   loop = true,
   autoplay = true,
 }: Props) {
+  const scale = useSlideScale();
   const player = useVideoPlayer(source, (p) => {
     p.loop = loop;
     if (autoplay) p.play();
@@ -21,7 +24,7 @@ export default function SlideVideo({
   return (
     <VideoView
       player={player}
-      style={{ width: "100%", height }}
+      style={{ width: "100%", height: height * scale.media, flexShrink: 1 }}
       contentFit="contain"
       nativeControls={true}
     />
