@@ -22,7 +22,10 @@ export function CodeSnippet({ code, language, filename }: CodeSnippetProps) {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{ padding: 14 * scale.text }}
+        style={{
+          paddingVertical: 14 * scale.text,
+          paddingHorizontal: 24 * scale.text,
+        }}
       >
         <Text
           style={[
