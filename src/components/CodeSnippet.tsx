@@ -8,6 +8,11 @@ interface CodeSnippetProps {
   filename?: string;
 }
 
+// Lines starting with # (shell) or // (JS) are shaded as comments
+function isComment(line: string) {
+  return /^\s*(#|\/\/)/.test(line);
+}
+
 export function CodeSnippet({ code, language, filename }: CodeSnippetProps) {
   const scale = useSlideScale();
 
@@ -34,7 +39,15 @@ export function CodeSnippet({ code, language, filename }: CodeSnippetProps) {
           ]}
           selectable
         >
-          {code.trim()}
+          {code
+            .trim()
+            .split("\n")
+            .map((line, i) => (
+              <Text key={i} style={isComment(line) && styles.comment}>
+                {i > 0 && "\n"}
+                {line}
+              </Text>
+            ))}
         </Text>
       </ScrollView>
     </View>
@@ -73,5 +86,9 @@ const styles = StyleSheet.create({
   code: {
     color: "#e2e8f0",
     fontFamily: "monospace",
+  },
+  comment: {
+    color: "#6b7280",
+    fontStyle: "italic",
   },
 });

@@ -5,9 +5,11 @@ import { useSlideScale } from "@/hooks/useSlideScale";
 interface SlideLinkProps {
   url: string;
   title: string;
+  // Shows an arrow after the title to hint that the link opens a new page
+  showArrow?: boolean;
 }
 
-export function SlideLink({ url, title }: SlideLinkProps) {
+export function SlideLink({ url, title, showArrow }: SlideLinkProps) {
   const scale = useSlideScale();
 
   return (
@@ -21,6 +23,7 @@ export function SlideLink({ url, title }: SlideLinkProps) {
     >
       <Text style={[styles.title, { fontSize: 14 * scale.text }]}>
         {title}
+        {showArrow && " ↗"}
       </Text>
       <Text style={[styles.url, { fontSize: 11 * scale.text }]} numberOfLines={1}>
         {url}

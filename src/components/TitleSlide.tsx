@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    fontWeight: "800",
+    fontWeight: "700",
     color: "#ffffff",
     textAlign: "center",
     letterSpacing: -0.5,
