@@ -1,10 +1,11 @@
 import { CodeSnippet } from "@/components/CodeSnippet";
 import SlideImage from "@/components/SlideImage";
 import { SlideLink } from "@/components/SlideLink";
+import SlideVideo from "@/components/SlideVideo";
 import { MessageThread, TextBubble } from "@/components/TextBubble";
 import { TitleSlide } from "@/components/TitleSlide";
 import { TitledSlide } from "@/components/TitledSlide";
-import type { Presentation } from "../types";
+import { disabled, type Presentation } from "../types";
 
 const presentation: Presentation = {
   title: "CDMX 2026",
@@ -16,7 +17,7 @@ const presentation: Presentation = {
         height={500}
       />
     ),
-    () => (
+    disabled(() => (
       <>
         <SlideImage
           source={require("./assets/wsl.gif")}
@@ -24,7 +25,7 @@ const presentation: Presentation = {
         />
         <TitleSlide title="expo.fyi/wsl" />
       </>
-    ),
+    )),
     () => (
       <SlideImage
         source={require("./assets/social-graphic.png")}
@@ -33,10 +34,10 @@ const presentation: Presentation = {
     ),
     () => (
       <>
-        {/* TODO: replace placeholder with phone screenshot */}
-        <SlideImage
-          source={{ uri: "https://placehold.co/390x844/png?text=Phone" }}
+        <SlideVideo
+          source={require("./assets/phone-demo.mp4")}
           height={500}
+          frame={{ aspectRatio: 1080 / 2424 }}
         />
         <CodeSnippet
           code={`$ npx create-expo-app\n$ claude --dangerously-skip-permissions`}
@@ -46,9 +47,8 @@ const presentation: Presentation = {
     () => (
       <>
         <TitleSlide title="docs.expo.dev/agents" />
-        {/* TODO: replace placeholder with image */}
         <SlideImage
-          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+          source={require("./assets/expo-skills.gif")}
           height={400}
         />
         <CodeSnippet
@@ -141,6 +141,68 @@ $ eas simulator:start --platform ios \\
         />
       </TitledSlide>
     ),
+    () => (
+      <TitledSlide title="Orchestrators + simulators">
+        {/* TODO: replace placeholder with image */}
+        <SlideImage
+          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+          height={500}
+        />
+      </TitledSlide>
+    ),
+    () => (
+      <TitledSlide title="Agentic Workflows: Validation">
+        {/* TODO: replace placeholder with image */}
+        <SlideImage
+          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+          height={400}
+        />
+        {/* TODO: point to the agent test evidence */}
+        <SlideLink title="Agent test evidence" url="https://expo.dev" showArrow />
+      </TitledSlide>
+    ),
+    () => (
+      <TitledSlide title="Agentic Workflows: Triage + Fix">
+        {/* TODO: replace placeholder with image */}
+        <SlideImage
+          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+          height={500}
+        />
+      </TitledSlide>
+    ),
+    // TODO: replace placeholder with image
+    () => (
+      <SlideImage
+        source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+        height={500}
+      />
+    ),
+    () => (
+      <TitledSlide title="Agent Sessions + Sandboxes">
+        {/* TODO: replace placeholder with image */}
+        <SlideImage
+          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+          height={500}
+        />
+      </TitledSlide>
+    ),
+    () => (
+      <TitledSlide title="Expo Modules API">
+        {/* TODO: replace placeholder with image */}
+        <SlideImage
+          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+          height={500}
+        />
+      </TitledSlide>
+    ),
+    // TODO: replace placeholder with image
+    () => (
+      <SlideImage
+        source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+        height={500}
+      />
+    ),
+    () => <TitleSlide title="Thank you!" />,
   ],
 };
 

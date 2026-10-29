@@ -1,7 +1,7 @@
 import { Redirect, useLocalSearchParams } from "expo-router";
 
 import { SlideContainer } from "@/components/SlideContainer";
-import { PRESENTATIONS } from "@/presentations";
+import { findEnabledSlide, PRESENTATIONS } from "@/presentations";
 
 export function generateStaticParams({
   params,
@@ -38,11 +38,30 @@ export default function SlideScreen() {
     );
   }
 
+  // A disabled slide forwards to the next enabled one (or the previous one
+  // if it's at the end of the deck)
+  if (Slide.disabled) {
+    const target =
+      findEnabledSlide(deck, number + 1, 1) ??
+      findEnabledSlide(deck, number - 1, -1);
+    if (!target) {
+      return <Redirect href="/" />;
+    }
+    return (
+      <Redirect
+        href={{
+          pathname: "/[presentation]/[slide]",
+          params: { presentation, slide: String(target) },
+        }}
+      />
+    );
+  }
+
   return (
     <SlideContainer
       presentation={presentation}
-      backSlide={number > 1 ? number - 1 : undefined}
-      nextSlide={number < deck.slides.length ? number + 1 : undefined}
+      backSlide={findEnabledSlide(deck, number - 1, -1)}
+      nextSlide={findEnabledSlide(deck, number + 1, 1)}
     >
       <Slide />
     </SlideContainer>

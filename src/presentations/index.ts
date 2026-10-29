@@ -3,6 +3,7 @@ import promptingExpo55 from "./prompting-expo-55";
 import type { Presentation } from "./types";
 
 export type { Presentation } from "./types";
+export { findEnabledSlide } from "./types";
 
 // Keys are the URL slugs: /[presentation]/[slide]
 export const PRESENTATIONS: Record<string, Presentation> = {

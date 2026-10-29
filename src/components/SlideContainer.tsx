@@ -86,6 +86,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: "#2a2d36",
+    // Fast clicks on the buttons shouldn't select their text on web
+    userSelect: "none",
   },
   navBtn: {
     paddingHorizontal: 20,
