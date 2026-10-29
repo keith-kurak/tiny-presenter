@@ -56,30 +56,24 @@ const presentation: Presentation = {
         />
       </>
     ),
-    // TODO: replace placeholder with phone screenshot
     () => (
-      <SlideImage
-        source={{ uri: "https://placehold.co/390x844/png?text=Phone" }}
-        height={500}
-      />
+      <TitledSlide title="Android + Expo UI">
+        <SlideVideo
+          source={require("./assets/android-expo-ui.mp4")}
+          height={500}
+          frame={{ aspectRatio: 1080 / 2424 }}
+        />
+      </TitledSlide>
     ),
     () => (
       <>
-        {/* TODO: replace placeholder with image */}
-        <SlideImage
-          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
-          height={400}
-        />
+        <SlideVideo source={require("./assets/agent-cli.mp4")} height={400} />
         <CodeSnippet code={`$ npx @expo/agent-cli status`} />
       </>
     ),
     () => (
       <TitledSlide title="Expo MCP">
-        {/* TODO: replace placeholder with image */}
-        <SlideImage
-          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
-          height={500}
-        />
+        <SlideVideo source={require("./assets/expo-mcp.mp4")} height={500} />
       </TitledSlide>
     ),
     () => (
