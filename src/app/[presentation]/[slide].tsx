@@ -1,6 +1,10 @@
 import { Redirect, useLocalSearchParams } from "expo-router";
 
 import { SlideContainer } from "@/components/SlideContainer";
+import {
+  DEFAULT_SLIDE_THEME,
+  SlideThemeContext,
+} from "@/hooks/useSlideTheme";
 import { findEnabledSlide, PRESENTATIONS } from "@/presentations";
 
 export function generateStaticParams({
@@ -58,12 +62,17 @@ export default function SlideScreen() {
   }
 
   return (
-    <SlideContainer
-      presentation={presentation}
-      backSlide={findEnabledSlide(deck, number - 1, -1)}
-      nextSlide={findEnabledSlide(deck, number + 1, 1)}
+    <SlideThemeContext.Provider
+      value={{ ...DEFAULT_SLIDE_THEME, ...deck.theme }}
     >
-      <Slide />
-    </SlideContainer>
+      <SlideContainer
+        presentation={presentation}
+        logo={deck.logo}
+        backSlide={findEnabledSlide(deck, number - 1, -1)}
+        nextSlide={findEnabledSlide(deck, number + 1, 1)}
+      >
+        <Slide />
+      </SlideContainer>
+    </SlideThemeContext.Provider>
   );
 }

@@ -1,10 +1,17 @@
+import type { ImageProps } from "expo-image";
 import { createElement, type ComponentType } from "react";
+
+import type { SlideTheme } from "@/hooks/useSlideTheme";
 
 export type Slide = ComponentType & { disabled?: boolean };
 
 export interface Presentation {
   title: string;
   slides: Slide[];
+  // Shown in the top left corner of every slide
+  logo?: ImageProps["source"];
+  // Colors to use instead of the defaults
+  theme?: Partial<SlideTheme>;
 }
 
 // Keeps a slide in the deck so later slide numbers don't change, but

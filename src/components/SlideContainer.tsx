@@ -1,12 +1,15 @@
+import { Image, ImageProps } from "expo-image";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { useSlideScale } from "@/hooks/useSlideScale";
+import { useSlideTheme } from "@/hooks/useSlideTheme";
 
 interface SlideContainerProps {
   children: React.ReactNode;
   presentation: string;
+  logo?: ImageProps["source"];
   nextSlide?: number;
   backSlide?: number;
 }
@@ -14,11 +17,13 @@ interface SlideContainerProps {
 export function SlideContainer({
   children,
   presentation,
+  logo,
   nextSlide,
   backSlide,
 }: SlideContainerProps) {
   const router = useRouter();
   const scale = useSlideScale();
+  const theme = useSlideTheme();
 
   // Hover only exists on web, so native always shows the buttons
   const [navHovered, setNavHovered] = useState(false);
@@ -56,7 +61,18 @@ export function SlideContainer({
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      {logo && (
+        // Fixed box with the image pinned left, so logos of any shape line up.
+        // Doesn't scale with the slide, so it stays clear of the content.
+        <Image
+          source={logo}
+          style={styles.logo}
+          contentFit="contain"
+          contentPosition="left"
+          pointerEvents="none"
+        />
+      )}
       <View style={[styles.content, { gap: 16 * scale.text }]}>
         {children}
       </View>
@@ -103,7 +119,14 @@ export function SlideContainer({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#13151a",
+  },
+  logo: {
+    position: "absolute",
+    top: 12,
+    left: 12,
+    width: 96,
+    height: 24,
+    zIndex: 1,
   },
   content: {
     flex: 1,

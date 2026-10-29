@@ -10,6 +10,12 @@ import { disabled, type Presentation } from "../types";
 
 const presentation: Presentation = {
   title: "CDMX 2026",
+  logo: require("./assets/logo.png"),
+  // From the conference theme: artwork deep violet + calaca lilac
+  theme: {
+    background: "#552a6b",
+    outline: "#c7add9",
+  },
   slides: [
     () => <TitleSlide title="CDMX 2026" subtitle="Coming soon" />,
     () => (
@@ -34,7 +40,7 @@ const presentation: Presentation = {
       />
     ),
     () => (
-      <>
+      <TitledSlide title="Agent + Expo Go">
         <SlideVideo
           source={require("./assets/phone-demo.mp4")}
           height={500}
@@ -43,7 +49,7 @@ const presentation: Presentation = {
         <CodeSnippet
           code={`$ npx create-expo-app\n$ claude --dangerously-skip-permissions`}
         />
-      </>
+      </TitledSlide>
     ),
     () => (
       <>
@@ -67,10 +73,10 @@ const presentation: Presentation = {
       </TitledSlide>
     ),
     () => (
-      <>
+      <TitledSlide title="@expo/agent-cli">
         <SlideVideo source={require("./assets/agent-cli.mp4")} height={400} />
         <CodeSnippet code={`$ npx @expo/agent-cli status`} />
-      </>
+      </TitledSlide>
     ),
     () => (
       <TitledSlide title="Expo MCP">
@@ -166,46 +172,104 @@ $ eas simulator:start --platform ios \\
     ),
     () => (
       <TitledSlide title="Agentic Workflows: Triage + Fix">
-        {/* TODO: replace placeholder with image */}
         <SlideImage
-          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+          source={require("./assets/agentic-workflow.png")}
           height={500}
         />
       </TitledSlide>
     ),
-    // TODO: replace placeholder with image
     () => (
-      <SlideImage
-        source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
-        height={500}
-      />
+      <TitledSlide title="TestFlight workflow trigger">
+        <Stagger interval={6000}>
+          <CodeSnippet
+            language="yaml"
+            code={`name: TestFlight feedback intake
+
+on:
+  app_store_connect:
+    beta_feedback:
+      types:
+        - screenshot
+
+jobs:
+  intake:
+    name: 1. File issue and dispatch expo-bot
+    environment: production
+    env:
+      FEEDBACK_KIND: screenshot
+      ASC_FEEDBACK_ID: \${{ app_store_connect.beta_feedback.id }}
+      GH_REPO: keith-kurak/brooks-expo
+      BASE_BRANCH: main`}
+          />
+          <SlideImage
+            source={require("./assets/triage-no-issue.gif")}
+            height={500}
+          />
+        </Stagger>
+      </TitledSlide>
     ),
     () => (
-      <TitledSlide title="Agent Sessions + Sandboxes">
-        {/* TODO: replace placeholder with image */}
-        <SlideImage
-          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
-          height={500}
+      <TitledSlide title="Agent sessions">
+        <CodeSnippet
+          language="yaml"
+          code={`jobs:
+  fix_lint:
+    type: agent
+    params:
+      agent_kind: claude-code
+      prompt: Fix the lint errors on main and open a pull request with the fix.
+      max_duration_seconds: 1800
+      github_access: write   # none | read | write, default: read
+      limits:
+        builds: 2`}
         />
       </TitledSlide>
     ),
     () => (
       <TitledSlide title="Expo Modules API">
-        {/* TODO: replace placeholder with image */}
-        <SlideImage
-          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
-          height={500}
+        <CodeSnippet
+          language="swift"
+          code={`@ExpoModule
+public final class MyModule {
+  @JS
+  func add(a: Double, b: Double) -> Double {
+    return a + b
+  }
+
+  @JS
+  func fetchValue(key: String) async throws -> String {
+    return try await store.read(key)
+  }
+
+  @JS
+  var ready: Bool {
+    return isReady
+  }
+}`}
         />
       </TitledSlide>
     ),
-    // TODO: replace placeholder with image
     () => (
       <SlideImage
-        source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+        source={require("./assets/beach-agents.png")}
         height={500}
       />
     ),
-    () => <TitleSlide title="Thank you!" />,
+    () => (
+      <>
+        <TitleSlide title="¡Muchas gracias!" />
+        {/* Made from the link below with toqr (installed with @expo/cli) */}
+        <SlideImage
+          source={require("./assets/resources-qr.svg")}
+          height={260}
+        />
+        <SlideLink
+          title="Slide resources"
+          url="https://github.com/keith-kurak/cdmx-2026-demo-app"
+          showArrow
+        />
+      </>
+    ),
   ],
 };
 

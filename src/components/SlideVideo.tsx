@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { useSlideScale } from "@/hooks/useSlideScale";
+import { useSlideTheme } from "@/hooks/useSlideTheme";
 
 type Props = {
   source: string;
@@ -23,6 +24,7 @@ export default function SlideVideo({
   frame,
 }: Props) {
   const scale = useSlideScale();
+  const theme = useSlideTheme();
   const player = useVideoPlayer(source, (p) => {
     p.loop = loop;
   });
@@ -53,6 +55,7 @@ export default function SlideVideo({
     <View
       style={[
         styles.frame,
+        { borderColor: theme.outline },
         {
           height: height * scale.media,
           aspectRatio: frame.aspectRatio,
@@ -78,7 +81,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     minHeight: 0,
     borderWidth: 3,
-    borderColor: "#3a3d46",
     overflow: "hidden",
     backgroundColor: "#000000",
   },
