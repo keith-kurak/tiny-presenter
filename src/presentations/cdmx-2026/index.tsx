@@ -2,6 +2,7 @@ import { CodeSnippet } from "@/components/CodeSnippet";
 import SlideImage from "@/components/SlideImage";
 import { SlideLink } from "@/components/SlideLink";
 import SlideVideo from "@/components/SlideVideo";
+import { Stagger } from "@/components/Stagger";
 import { MessageThread, TextBubble } from "@/components/TextBubble";
 import { TitleSlide } from "@/components/TitleSlide";
 import { TitledSlide } from "@/components/TitledSlide";
@@ -73,15 +74,22 @@ const presentation: Presentation = {
     ),
     () => (
       <TitledSlide title="Expo MCP">
-        <SlideVideo source={require("./assets/expo-mcp.mp4")} height={500} />
+        <Stagger interval={7000}>
+          <SlideVideo source={require("./assets/expo-mcp.mp4")} height={500} />
+          <SlideVideo source={require("./assets/build-crash.mp4")} height={500} />
+          <SlideImage
+            source={require("./assets/build-crash-diagnosis.png")}
+            height={500}
+          />
+        </Stagger>
       </TitledSlide>
     ),
     () => (
-      <TitledSlide title="Android looking good">
-        {/* TODO: replace placeholder with image */}
-        <SlideImage
-          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+      <TitledSlide title="Development build testing">
+        <SlideVideo
+          source={require("./assets/android-looking-good.mp4")}
           height={500}
+          frame={{ aspectRatio: 1080 / 2424 }}
         />
       </TitledSlide>
     ),
@@ -105,18 +113,19 @@ $ eas simulator:start --platform ios \\
     ),
     () => (
       <TitledSlide title="Sharing simulator sessions">
-        <MessageThread>
-          <TextBubble from="received" message="Is that feature done yet?" />
-          <TextBubble
-            message="Here you go!"
-            url="https://expo.dev/accounts/acme/projects/my-app/simulator-sessions/create?buildId=BUILD_UUID"
+        <Stagger interval={5000}>
+          <MessageThread>
+            <TextBubble from="received" message="Is that feature done yet?" />
+            <TextBubble
+              message="Here you go!"
+              url="https://expo.dev/accounts/acme/projects/my-app/simulator-sessions/create?buildId=BUILD_UUID"
+            />
+          </MessageThread>
+          <SlideVideo
+            source={require("./assets/ios-simulator-preview.mp4")}
+            height={500}
           />
-        </MessageThread>
-        {/* TODO: replace placeholder with image */}
-        <SlideImage
-          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
-          height={400}
-        />
+        </Stagger>
       </TitledSlide>
     ),
     () => (
@@ -127,32 +136,32 @@ $ eas simulator:start --platform ios \\
     --type agent-device \\
     --build-id <dev-build-id>`}
         />
-        {/* TODO: point to a recorded simulator session */}
         <SlideLink
           title="Watch a simulator session"
-          url="https://expo.dev"
+          url="https://expo.dev/accounts/keithco/projects/pancake-theory/simulator-sessions/01a1889c-c0e6-7617-bfd6-5d301ac6f595"
           showArrow
         />
       </TitledSlide>
     ),
     () => (
       <TitledSlide title="Orchestrators + simulators">
-        {/* TODO: replace placeholder with image */}
         <SlideImage
-          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+          source={require("./assets/orchestrators-simulators.png")}
           height={500}
         />
       </TitledSlide>
     ),
     () => (
       <TitledSlide title="Agentic Workflows: Validation">
-        {/* TODO: replace placeholder with image */}
-        <SlideImage
-          source={{ uri: "https://placehold.co/1200x675/png?text=Image" }}
+        <SlideVideo
+          source={require("./assets/agent-verify-workflow.mp4")}
           height={400}
         />
-        {/* TODO: point to the agent test evidence */}
-        <SlideLink title="Agent test evidence" url="https://expo.dev" showArrow />
+        <SlideLink
+          title="Agent test evidence"
+          url="https://pancaketheory--pr-82-verify.expo.app/"
+          showArrow
+        />
       </TitledSlide>
     ),
     () => (

@@ -1,5 +1,6 @@
-import { useRouter } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useState } from "react";
+import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { useSlideScale } from "@/hooks/useSlideScale";
 
@@ -19,18 +20,52 @@ export function SlideContainer({
   const router = useRouter();
   const scale = useSlideScale();
 
-  const goTo = (slide: number) =>
-    router.push({
-      pathname: "/[presentation]/[slide]",
-      params: { presentation, slide: String(slide) },
-    });
+  // Hover only exists on web, so native always shows the buttons
+  const [navHovered, setNavHovered] = useState(false);
+  const showNav = Platform.OS !== "web" || navHovered;
+
+  const goTo = useCallback(
+    (slide: number) =>
+      router.push({
+        pathname: "/[presentation]/[slide]",
+        params: { presentation, slide: String(slide) },
+      }),
+    [router, presentation],
+  );
+
+  // Left and right arrow keys move between slides on web. Earlier slides stay
+  // mounted in the stack, so only the focused slide listens.
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS !== "web") return;
+
+      const onKeyDown = (event: KeyboardEvent) => {
+        if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+          return;
+        }
+        if (event.key === "ArrowLeft" && backSlide) {
+          goTo(backSlide);
+        } else if (event.key === "ArrowRight" && nextSlide) {
+          goTo(nextSlide);
+        }
+      };
+
+      window.addEventListener("keydown", onKeyDown);
+      return () => window.removeEventListener("keydown", onKeyDown);
+    }, [goTo, backSlide, nextSlide]),
+  );
 
   return (
     <View style={styles.container}>
       <View style={[styles.content, { gap: 16 * scale.text }]}>
         {children}
       </View>
-      <View style={styles.nav}>
+      {/* Stays in the layout when hidden, so there is always an area to hover */}
+      <Pressable
+        style={[styles.nav, !showNav && styles.navHidden]}
+        onHoverIn={() => setNavHovered(true)}
+        onHoverOut={() => setNavHovered(false)}
+      >
         {backSlide ? (
           <Pressable
             style={({ pressed }) => [
@@ -60,7 +95,7 @@ export function SlideContainer({
         ) : (
           <View style={styles.navPlaceholder} />
         )}
-      </View>
+      </Pressable>
     </View>
   );
 }
@@ -88,6 +123,9 @@ const styles = StyleSheet.create({
     borderTopColor: "#2a2d36",
     // Fast clicks on the buttons shouldn't select their text on web
     userSelect: "none",
+  },
+  navHidden: {
+    opacity: 0,
   },
   navBtn: {
     paddingHorizontal: 20,
